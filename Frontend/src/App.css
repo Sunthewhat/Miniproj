@@ -1,0 +1,11 @@
+/* Remove margin and padding from body and App container */
+body,
+.App {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default outline from focused elements */
+*:focus {
+  outline: none;
+}
