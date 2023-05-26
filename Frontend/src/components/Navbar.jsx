@@ -11,6 +11,8 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import "../css/Navbar.css";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -52,7 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({ search_display }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -63,6 +65,21 @@ export default function Navbar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+  const navigate = useNavigate();
+  const handleOnclick = () => {
+    navigate("/");
+  };
+
+  const search_style = {
+    display: "none",
+  };
+
+  const stylechange = () => {
+    if (search_display == false) {
+      console.log(search_display);
+      return search_style;
+    }
   };
 
   const menuId = "primary-search-account-menu";
@@ -82,7 +99,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -98,6 +115,7 @@ export default function Navbar() {
       <AppBar position="static" className={style} id="Nav">
         <Toolbar>
           <Typography
+            onClick={()=>handleOnclick()}
             variant="h6"
             noWrap
             component="div"
@@ -111,15 +129,17 @@ export default function Navbar() {
             }}>
             Pet World
           </Typography>
-          <Search className="homesearch">
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          <Box>
+            <Search className="homesearch" style={stylechange()}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "felx", md: "flex" } }}>
             <IconButton

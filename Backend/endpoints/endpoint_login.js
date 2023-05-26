@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Connection = require("mysql2/typings/mysql/lib/Connection");
 
 module.exports = (req, res) => {
   const username = req.body.username;
@@ -10,7 +9,7 @@ module.exports = (req, res) => {
   var sql = mysql.format("select * from users where username = ?", [username]);
   console.log("Debug: /login => " + sql);
 
-  Connection.createQuery(sql, async (err, rows) => {
+  connection.query(sql, async (err, rows) => {
     if (err) {
       return res.send({
         success: false,

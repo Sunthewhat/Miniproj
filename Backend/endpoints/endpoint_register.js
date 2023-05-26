@@ -20,16 +20,16 @@ module.exports = async (req, res) => {
     });
   }
 
-  password = await bcrypt.hash(password, 10);
+  const hashed_password = await bcrypt.hash(password, 10);
 
   var sql = mysql.format(
     "INSERT INTO users (username,password) VALUES (?,?)",
-    [username, password]
+    [username, hashed_password]
   );
 
   console.log("/register => " + sql);
 
-  connection.query(sql, (err, rows) => {
+  Connection.query(sql, (err, rows) => {
     if (err) {
       return res.json({
         success: false,

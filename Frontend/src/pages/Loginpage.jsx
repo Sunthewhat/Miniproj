@@ -1,7 +1,21 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import CustomButton from "../components/CustomButton";
+import { useState } from "react";
+import api from "../axios";
 
 function Loginpage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    // console.log(username);
+    // console.log(password);
+    try {
+      const res = api.post("/login", { username, password });
+      console.log(res.data);
+    } catch (error) {}
+  };
+
   return (
     <Box
       sx={{
@@ -11,7 +25,7 @@ function Loginpage() {
         justifyContent: "center",
         height: "100vh",
         backgroundColor: "#E8D5C4",
-      }}> 
+      }}>
       <Grid
         container
         direction="row"
@@ -80,8 +94,10 @@ function Loginpage() {
                   label=""
                   fullWidth
                   variant="outlined"
-                  // value={newNote.title}
-                  // onChange={handleChange}
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                   // error={!!error.title}
                   // helperText={error.title}
                 />
@@ -102,8 +118,10 @@ function Loginpage() {
                   label=""
                   fullWidth
                   variant="outlined"
-                  // value={newNote.title}
-                  // onChange={handleChange}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   // error={!!error.title}
                   // helperText={error.title}
                 />
@@ -123,7 +141,12 @@ function Loginpage() {
                 sx={{
                   textAlign: "center",
                 }}>
-                <CustomButton text="Log In" fontSize={20} color={"#3A98B9"} />
+                <CustomButton
+                  text="Log In"
+                  fontSize={20}
+                  color={"#3A98B9"}
+                  handle={login}
+                />
               </Box>
               <Box>
                 <Typography
