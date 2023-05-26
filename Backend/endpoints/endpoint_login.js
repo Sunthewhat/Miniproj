@@ -11,21 +11,21 @@ module.exports = (req, res) => {
 
   connection.query(sql, async (err, rows) => {
     if (err) {
-      return res.send({
+      return res.status(401).send({
         success: false,
         data: null,
         error: err.message,
       });
     }
     if (rows.length == 0) {
-      res.send({
+      res.status(401).send({
         success: false,
         error: "Username not found",
       });
     } else {
       const validPass = await bcrypt.compare(password, rows[0].password);
       if (!validPass) {
-        res.send({
+        res.status(401).send({
           success: true,
           message: "Password Incorrect",
         });
@@ -37,8 +37,8 @@ module.exports = (req, res) => {
           process.env.JWT_SECRET_KEY,
           { expiresIn: "7d" }
         );
-        res.cookie("user", login_token);
-        res.send({
+        res.cookie("jwt_token", login_token);
+        res.status(201).send({
           success: true,
           message: "Authentication Success",
         });

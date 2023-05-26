@@ -2,17 +2,20 @@ import { Box, Grid, TextField, Typography } from "@mui/material";
 import CustomButton from "../components/CustomButton";
 import { useState } from "react";
 import api from "../axios";
+import { useNavigate } from "react-router-dom";
 
 function Loginpage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const login = async () => {
     // console.log(username);
     // console.log(password);
     try {
-      const res = api.post("/login", { username, password });
-      console.log(res.data);
+      const res = await api.post("/login", { username, password });
+      // console.log(res.data);
+      navigate("/");
     } catch (error) {}
   };
 
@@ -31,7 +34,7 @@ function Loginpage() {
         direction="row"
         justifyContent="space-evenly"
         alignItems="center">
-        <Grid item sx={4} sm={10} md={4}>
+        <Grid item xs={4} sm={10} md={4}>
           <Box>
             {/* Left components */}
             <Box>
@@ -122,23 +125,11 @@ function Loginpage() {
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
-                  // error={!!error.title}
-                  // helperText={error.title}
                 />
-                <Box
-                  sx={{
-                    fontFamily: "'Fira code',monospace",
-                    fontSize: { xl: "20px", md: "20px", xs: "15px" },
-                    fontWeight: "bold",
-                    color: "#868686",
-                    padding: "5% 5% 5% 0%",
-                  }}>
-                  <input type="checkbox" />
-                  Remember me
-                </Box>
               </Box>
               <Box
                 sx={{
+                  marginTop: "8vh",
                   textAlign: "center",
                 }}>
                 <CustomButton
@@ -148,7 +139,10 @@ function Loginpage() {
                   handle={login}
                 />
               </Box>
-              <Box>
+              <Box
+                onClick={() => {
+                  navigate("/signup");
+                }}>
                 <Typography
                   sx={{
                     textAlign: "center",

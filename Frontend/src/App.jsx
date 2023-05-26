@@ -7,7 +7,6 @@ import Accoutpage from "./pages/Accountpage";
 
 function App() {
   return (
-    <BrowserRouter>
       <div className="App">
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -16,7 +15,6 @@ function App() {
           <Route path="/account" element={<Accoutpage />} />
         </Routes>
       </div>
-    </BrowserRouter>
   );
 }
 

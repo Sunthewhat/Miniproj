@@ -5,6 +5,7 @@ import FilterMenu from "../components/FilterMenu";
 import SortMenu from "../components/SortMenu";
 
 function Homepage() {
+  
   return (
     <Box
       sx={{

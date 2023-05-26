@@ -1,7 +1,35 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import CustomButton from "../components/CustomButton";
+import { useNavigate } from "react-router-dom";
+import api from "../axios";
+import { useState } from "react";
+import { AxiosError } from "axios";
 
 export default function Signuppage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
+  const [passerror, setPasserror] = useState("");
+
+  const validate = () => {
+    setPasserror("");
+    if (password !== repassword) {
+      setPasserror("Password does not match");
+      return false;
+    }
+    return true;
+  };
+  const signup = async () => {
+    try {
+      if (!validate()) return;
+      await api.post("/register", { username, password });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -11,6 +39,7 @@ export default function Signuppage() {
         justifyContent: "center",
         height: "100vh",
         padding: "0px",
+        backgroundColor: "#E8D5C4",
       }}>
       <Grid
         container
@@ -28,7 +57,7 @@ export default function Signuppage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin: "0"
+              margin: "0",
             }}>
             <Box
               sx={{
@@ -65,10 +94,12 @@ export default function Signuppage() {
                   label=""
                   fullWidth
                   variant="outlined"
-                  // value={newNote.title}
-                  // onChange={handleChange}
-                  // error={!!error.title}
-                  // helperText={error.title}
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                  // error={!!passerror}
+                  // helperText={passerror}
                 />
                 <Typography
                   sx={{
@@ -87,10 +118,12 @@ export default function Signuppage() {
                   label=""
                   fullWidth
                   variant="outlined"
-                  // value={newNote.title}
-                  // onChange={handleChange}
-                  // error={!!error.title}
-                  // helperText={error.title}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  error={!!passerror}
+                  helperText={passerror}
                 />
                 <Typography
                   sx={{
@@ -109,20 +142,28 @@ export default function Signuppage() {
                   label=""
                   fullWidth
                   variant="outlined"
-                  // value={newNote.title}
-                  // onChange={handleChange}
-                  // error={!!error.title}
-                  // helperText={error.title}
+                  value={repassword}
+                  onChange={(e) => {
+                    setRepassword(e.target.value);
+                  }}
+                  error={!!passerror}
+                  helperText={passerror}
                 />
               </Box>
-              <Box sx={{
-                marginBottom:"4vh",
-              }}></Box>
+              <Box
+                sx={{
+                  marginBottom: "4vh",
+                }}></Box>
               <Box
                 sx={{
                   textAlign: "center",
                 }}>
-                <CustomButton text="Log In" fontSize={20} color={"#3A98B9"} />
+                <CustomButton
+                  text="Sign Up"
+                  fontSize={20}
+                  color={"#3A98B9"}
+                  handle={signup}
+                />
               </Box>
             </Box>
           </Box>
