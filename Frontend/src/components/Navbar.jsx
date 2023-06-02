@@ -13,6 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import "../css/Navbar.css";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import api from "../axios";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,6 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navbar({ search_display }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -66,7 +68,11 @@ export default function Navbar({ search_display }) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await api.post("/logout");
+    navigate("/login");
+  };
   const handleOnclick = () => {
     navigate("/");
   };
@@ -99,7 +105,7 @@ export default function Navbar({ search_display }) {
       open={isMenuOpen}
       onClose={handleMenuClose}>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+      <MenuItem onClick={handleLogout}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -115,7 +121,7 @@ export default function Navbar({ search_display }) {
       <AppBar position="static" className={style} id="Nav">
         <Toolbar>
           <Typography
-            onClick={()=>handleOnclick()}
+            onClick={() => handleOnclick()}
             variant="h6"
             noWrap
             component="div"

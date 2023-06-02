@@ -10,6 +10,7 @@ export default function Signuppage() {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [passerror, setPasserror] = useState("");
+  const navigate = useNavigate();
 
   const validate = () => {
     setPasserror("");
@@ -23,6 +24,7 @@ export default function Signuppage() {
     try {
       if (!validate()) return;
       await api.post("/register", { username, password });
+      navigate("/login");
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);

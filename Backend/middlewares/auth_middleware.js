@@ -10,6 +10,7 @@ module.exports = async (req, res, next) => {
     req.userId = userId;
     next();
   } catch (error) {
+    console.log("Authentication Error!!!!!!!!!!");
     return res.status(401).send();
   }
 };

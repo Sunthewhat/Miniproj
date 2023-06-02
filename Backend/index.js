@@ -7,6 +7,8 @@ const port = 4000;
 const dotenv = require("dotenv");
 const cors = require("cors");
 const authMiddleware = require("./middlewares/auth_middleware");
+const cafe = require("./endpoints/endpoint_cafe");
+const logout = require("./endpoints/endpoint_logout");
 
 const connection = mysql.createConnection({
   host: "server2.bsthun.com",
@@ -39,6 +41,12 @@ app.get("/", require("./endpoints/test"));
 app.post("/login", require("./endpoints/endpoint_login"));
 app.post("/register", require("./endpoints/endpoint_register"));
 app.get("/profile", authMiddleware, require("./endpoints/endpoint_getprofile"));
+app.post("/logout", authMiddleware, logout.logout);
+//cafe
+app.post("/cafe", authMiddleware, cafe.create);
+app.get("/cafe", authMiddleware, cafe.read);
+app.patch("/cafe/:id", cafe.update);
+app.delete("/cafe/:id", authMiddleware, cafe.remove);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

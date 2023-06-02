@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   //   console.log(req.cookies);
   const query = util.promisify(connection.query).bind(connection);
   try {
-    const users = await query("select username from users where id = ?", [
+    const users = await query("select * from users where id = ?", [
       req.userId,
     ]);
       const user = users[0];

@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   try {
     var sql = mysql.format("select * from users where username = ?", [
       username,
-    ]);
+    ]); 2
     const users = await query(sql);
     if (users.length != 0) {
       return res.status(400).json({
