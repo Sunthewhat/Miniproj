@@ -34,7 +34,7 @@ if cannot run properly try
 
 # Pet World
 
-    It’s a web application that gather all the pet cafe all around Thailand and provide the information eg. Open-Close time, pictures, price, menu, etc. User will be able to add a review and one can also add their own food, menu or new shop in this platform.
+It’s a web application that gather all the pet cafe all around Thailand and provide the information eg. Open-Close time, pictures, price, menu, etc. User will be able to add a review and one can also add their own food, menu or new shop in this platform.
 
 ## Features
 
