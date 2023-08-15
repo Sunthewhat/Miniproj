@@ -21,7 +21,7 @@ const connection = mysql.createConnection({
 });
 
 const privateKey = fs.readFileSync("cert.pem", "utf8");
-const certificate = fs.readFileSync("cert.pub.pem", "utf8");
+const certificate = fs.readFileSync("certpub.pem", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
 dotenv.config();
