@@ -9,6 +9,8 @@ const cors = require("cors");
 const authMiddleware = require("./middlewares/auth_middleware");
 const cafe = require("./endpoints/endpoint_cafe");
 const logout = require("./endpoints/endpoint_logout");
+const fs = require("fs");
+const https = require("https");
 
 const connection = mysql.createConnection({
   host: "server2.bsthun.com",
@@ -17,6 +19,10 @@ const connection = mysql.createConnection({
   password: "SqJj6le5ZWS61lTQ",
   database: "lab_blank01_163hqvb",
 });
+
+const privateKey = fs.readFileSync("cert.pem", "utf8");
+const certificate = fs.readFileSync("cert.pub.pem", "utf8");
+const credentials = { key: privateKey, cert: certificate };
 
 dotenv.config();
 
@@ -48,6 +54,8 @@ app.get("/cafe", authMiddleware, cafe.read);
 app.patch("/cafe/:id", cafe.update);
 app.delete("/cafe/:id", authMiddleware, cafe.remove);
 
-app.listen(port, () => {
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
